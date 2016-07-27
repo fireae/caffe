@@ -8,7 +8,6 @@
 #include "caffe/filler.hpp"
 #include "caffe/layers/accuracy_layer.hpp"
 #include "caffe/util/rng.hpp"
-
 #include "caffe/test/test_caffe_main.hpp"
 
 namespace caffe {

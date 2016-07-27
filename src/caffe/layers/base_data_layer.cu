@@ -1,6 +1,10 @@
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/layers/base_data_layer.hpp"
+=======
+#include "caffe/data_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

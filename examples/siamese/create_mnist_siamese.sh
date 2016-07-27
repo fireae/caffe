@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 # This script converts the mnist data into leveldb format.
+<<<<<<< HEAD
 set -e
+=======
+>>>>>>> caffe-yolo/master
 
 EXAMPLES=./build/examples/siamese
 DATA=./data/mnist

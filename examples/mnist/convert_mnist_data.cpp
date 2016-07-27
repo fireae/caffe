@@ -21,11 +21,11 @@
 
 #include <fstream>  // NOLINT(readability/streams)
 #include <string>
-
 #include "boost/scoped_ptr.hpp"
 #include "caffe/proto/caffe.pb.h"
 #include "caffe/util/db.hpp"
 #include "caffe/util/format.hpp"
+#include "caffe/proto/caffe.pb.h"
 
 #if defined(USE_LEVELDB) && defined(USE_LMDB)
 
@@ -70,11 +70,9 @@ void convert_dataset(const char* image_filename, const char* label_filename,
   image_file.read(reinterpret_cast<char*>(&cols), 4);
   cols = swap_endian(cols);
 
-
   scoped_ptr<db::DB> db(db::GetDB(db_backend));
   db->Open(db_path, db::NEW);
   scoped_ptr<db::Transaction> txn(db->NewTransaction());
-
   // Storing to db
   char label;
   char* pixels = new char[rows * cols];
@@ -92,6 +90,7 @@ void convert_dataset(const char* image_filename, const char* label_filename,
     label_file.read(&label, 1);
     datum.set_data(pixels, rows*cols);
     datum.set_label(label);
+
     string key_str = caffe::format_int(item_id, 8);
     datum.SerializeToString(&value);
 
@@ -114,7 +113,6 @@ int main(int argc, char** argv) {
 #ifndef GFLAGS_GFLAGS_H_
   namespace gflags = google;
 #endif
-
   FLAGS_alsologtostderr = 1;
 
   gflags::SetUsageMessage("This script converts the MNIST dataset to\n"

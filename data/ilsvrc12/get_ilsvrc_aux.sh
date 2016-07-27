@@ -8,11 +8,19 @@
 # - the training splits with labels
 
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+<<<<<<< HEAD
 cd "$DIR"
 
 echo "Downloading..."
 
 wget -c http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz
+=======
+cd $DIR
+
+echo "Downloading..."
+
+wget http://dl.caffe.berkeleyvision.org/caffe_ilsvrc12.tar.gz
+>>>>>>> caffe-yolo/master
 
 echo "Unzipping..."
 

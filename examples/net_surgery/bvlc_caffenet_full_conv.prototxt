@@ -1,5 +1,6 @@
 # Fully convolutional network version of CaffeNet.
 name: "CaffeNetConv"
+<<<<<<< HEAD
 layer {
   name: "data"
   type: "Input"
@@ -9,6 +10,14 @@ layer {
     # the shape can be set for each input by reshape.
     shape: { dim: 1 dim: 3 dim: 451 dim: 451 }
   }
+=======
+input: "data"
+input_shape {
+  dim: 1
+  dim: 3
+  dim: 451
+  dim: 451
+>>>>>>> caffe-yolo/master
 }
 layer {
   name: "conv1"

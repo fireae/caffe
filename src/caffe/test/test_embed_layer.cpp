@@ -6,12 +6,10 @@
 #include "caffe/common.hpp"
 #include "caffe/filler.hpp"
 #include "caffe/layers/embed_layer.hpp"
-
 #include "caffe/test/test_caffe_main.hpp"
 #include "caffe/test/test_gradient_check_util.hpp"
 
 namespace caffe {
-
 template <typename TypeParam>
 class EmbedLayerTest : public MultiDeviceTest<TypeParam> {
   typedef typename TypeParam::Dtype Dtype;

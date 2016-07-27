@@ -92,7 +92,6 @@ class P2PSync : public GPUParams<Dtype>, public Solver<Dtype>::Callback,
   inline const shared_ptr<Solver<Dtype> >& solver() const {
     return solver_;
   }
-
   void Run(const vector<int>& gpus);
   void Prepare(const vector<int>& gpus,
                vector<shared_ptr<P2PSync<Dtype> > >* syncs);

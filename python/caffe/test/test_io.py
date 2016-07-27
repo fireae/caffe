@@ -39,6 +39,7 @@ class TestBlobProtoToArray(unittest.TestCase):
 
         arr = caffe.io.blobproto_to_array(blob)
         self.assertEqual(arr, 123)
+<<<<<<< HEAD
 
 
 class TestArrayToDatum(unittest.TestCase):
@@ -54,3 +55,5 @@ class TestArrayToDatum(unittest.TestCase):
         self.assertGreater(
             len(d1.SerializeToString()),
             len(d2.SerializeToString()))
+=======
+>>>>>>> caffe-yolo/master

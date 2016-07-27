@@ -1,7 +1,15 @@
 #ifdef USE_CUDNN
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/layers/cudnn_conv_layer.hpp"
+=======
+#include "caffe/filler.hpp"
+#include "caffe/layer.hpp"
+#include "caffe/util/im2col.hpp"
+#include "caffe/util/math_functions.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 
@@ -30,7 +38,11 @@ void CuDNNConvolutionLayer<Dtype>::Forward_gpu(
       // Bias.
       if (this->bias_term_) {
         const Dtype* bias_data = this->blobs_[1]->gpu_data();
+<<<<<<< HEAD
         CUDNN_CHECK(cudnnAddTensor(handle_[g],
+=======
+        CUDNN_CHECK(cudnnAddTensor(handle_[g], CUDNN_ADD_SAME_C,
+>>>>>>> caffe-yolo/master
               cudnn::dataType<Dtype>::one,
               bias_desc_, bias_data + bias_offset_ * g,
               cudnn::dataType<Dtype>::one,
@@ -53,10 +65,18 @@ void CuDNNConvolutionLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
   if (this->param_propagate_down_[0]) {
     weight = this->blobs_[0]->gpu_data();
     weight_diff = this->blobs_[0]->mutable_gpu_diff();
+<<<<<<< HEAD
+=======
+    caffe_gpu_set(this->blobs_[0]->count(), Dtype(0), weight_diff);
+>>>>>>> caffe-yolo/master
   }
   Dtype* bias_diff = NULL;
   if (this->bias_term_ && this->param_propagate_down_[1]) {
     bias_diff = this->blobs_[1]->mutable_gpu_diff();
+<<<<<<< HEAD
+=======
+    caffe_gpu_set(this->blobs_[1]->count(), Dtype(0), bias_diff);
+>>>>>>> caffe-yolo/master
   }
   for (int i = 0; i < top.size(); ++i) {
     const Dtype* top_diff = top[i]->gpu_diff();
@@ -74,7 +94,11 @@ void CuDNNConvolutionLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
       // Gradient w.r.t. weights.
       if (this->param_propagate_down_[0]) {
         const Dtype* bottom_data = bottom[i]->gpu_data();
+<<<<<<< HEAD
         CUDNN_CHECK(cudnnConvolutionBackwardFilter(
+=======
+        CUDNN_CHECK(cudnnConvolutionBackwardFilter_v3(
+>>>>>>> caffe-yolo/master
               handle_[1*this->group_ + g],
               cudnn::dataType<Dtype>::one,
               bottom_descs_[i], bottom_data + bottom_offset_ * g,
@@ -92,7 +116,11 @@ void CuDNNConvolutionLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
           weight = this->blobs_[0]->gpu_data();
         }
         Dtype* bottom_diff = bottom[i]->mutable_gpu_diff();
+<<<<<<< HEAD
         CUDNN_CHECK(cudnnConvolutionBackwardData(
+=======
+        CUDNN_CHECK(cudnnConvolutionBackwardData_v3(
+>>>>>>> caffe-yolo/master
               handle_[2*this->group_ + g],
               cudnn::dataType<Dtype>::one,
               filter_desc_, weight + this->weight_offset_ * g,

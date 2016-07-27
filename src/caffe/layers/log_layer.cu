@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 #include <vector>
 
 #include "caffe/layers/log_layer.hpp"
+=======
+#include <algorithm>
+#include <vector>
+
+#include "caffe/layer.hpp"
+#include "caffe/neuron_layers.hpp"
+>>>>>>> caffe-yolo/master
 #include "caffe/util/math_functions.hpp"
 
 namespace caffe {

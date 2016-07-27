@@ -29,6 +29,7 @@ SRC_DIRS := $(shell find * -type d -exec bash -c "find {} -maxdepth 1 \
 	\( -name '*.cpp' -o -name '*.proto' \) | grep -q ." \; -print)
 
 # The target shared library name
+<<<<<<< HEAD
 LIBRARY_NAME := $(PROJECT)
 LIB_BUILD_DIR := $(BUILD_DIR)/lib
 STATIC_NAME := $(LIB_BUILD_DIR)/lib$(LIBRARY_NAME).a
@@ -40,6 +41,11 @@ DYNAMIC_NAME_SHORT := lib$(LIBRARY_NAME).so
 DYNAMIC_VERSIONED_NAME_SHORT := $(DYNAMIC_NAME_SHORT).$(DYNAMIC_VERSION_MAJOR).$(DYNAMIC_VERSION_MINOR).$(DYNAMIC_VERSION_REVISION)
 DYNAMIC_NAME := $(LIB_BUILD_DIR)/$(DYNAMIC_VERSIONED_NAME_SHORT)
 COMMON_FLAGS += -DCAFFE_VERSION=$(DYNAMIC_VERSION_MAJOR).$(DYNAMIC_VERSION_MINOR).$(DYNAMIC_VERSION_REVISION)
+=======
+LIB_BUILD_DIR := $(BUILD_DIR)/lib
+STATIC_NAME := $(LIB_BUILD_DIR)/lib$(PROJECT).a
+DYNAMIC_NAME := $(LIB_BUILD_DIR)/lib$(PROJECT).so
+>>>>>>> caffe-yolo/master
 
 ##############################
 # Get all source files
@@ -86,7 +92,11 @@ NONEMPTY_LINT_REPORT := $(BUILD_DIR)/$(LINT_EXT)
 # PY$(PROJECT)_SRC is the python wrapper for $(PROJECT)
 PY$(PROJECT)_SRC := python/$(PROJECT)/_$(PROJECT).cpp
 PY$(PROJECT)_SO := python/$(PROJECT)/_$(PROJECT).so
+<<<<<<< HEAD
 PY$(PROJECT)_HXX := include/$(PROJECT)/layers/python_layer.hpp
+=======
+PY$(PROJECT)_HXX := include/$(PROJECT)/python_layer.hpp
+>>>>>>> caffe-yolo/master
 # MAT$(PROJECT)_SRC is the mex entrance point of matlab package for $(PROJECT)
 MAT$(PROJECT)_SRC := matlab/+$(PROJECT)/private/$(PROJECT)_.cpp
 ifneq ($(MATLAB_DIR),)
@@ -178,7 +188,11 @@ ifneq ($(CPU_ONLY), 1)
 	LIBRARIES := cudart cublas curand
 endif
 
+<<<<<<< HEAD
 LIBRARIES += glog gflags protobuf boost_system boost_filesystem m hdf5_hl hdf5
+=======
+LIBRARIES += glog gflags protobuf boost_system m hdf5_hl hdf5
+>>>>>>> caffe-yolo/master
 
 # handle IO dependencies
 USE_LEVELDB ?= 1
@@ -192,6 +206,7 @@ ifeq ($(USE_LMDB), 1)
 	LIBRARIES += lmdb
 endif
 ifeq ($(USE_OPENCV), 1)
+<<<<<<< HEAD
 	LIBRARIES += opencv_core opencv_highgui opencv_imgproc 
 
 	ifeq ($(OPENCV_VERSION), 3)
@@ -200,6 +215,11 @@ ifeq ($(USE_OPENCV), 1)
 		
 endif
 PYTHON_LIBRARIES ?= boost_python python2.7
+=======
+	LIBRARIES += opencv_core opencv_highgui opencv_imgproc
+endif
+PYTHON_LIBRARIES := boost_python python2.7
+>>>>>>> caffe-yolo/master
 WARNINGS := -Wall -Wno-sign-compare
 
 ##############################
@@ -248,8 +268,11 @@ ifeq ($(UNAME), Linux)
 	LINUX := 1
 else ifeq ($(UNAME), Darwin)
 	OSX := 1
+<<<<<<< HEAD
 	OSX_MAJOR_VERSION := $(shell sw_vers -productVersion | cut -f 1 -d .)
 	OSX_MINOR_VERSION := $(shell sw_vers -productVersion | cut -f 2 -d .)
+=======
+>>>>>>> caffe-yolo/master
 endif
 
 # Linux
@@ -263,7 +286,10 @@ ifeq ($(LINUX), 1)
 	# boost::thread is reasonably called boost_thread (compare OS X)
 	# We will also explicitly add stdc++ to the link target.
 	LIBRARIES += boost_thread stdc++
+<<<<<<< HEAD
 	VERSIONFLAGS += -Wl,-soname,$(DYNAMIC_VERSIONED_NAME_SHORT) -Wl,-rpath,$(ORIGIN)/../lib
+=======
+>>>>>>> caffe-yolo/master
 endif
 
 # OS X:
@@ -272,13 +298,18 @@ endif
 ifeq ($(OSX), 1)
 	CXX := /usr/bin/clang++
 	ifneq ($(CPU_ONLY), 1)
+<<<<<<< HEAD
 		CUDA_VERSION := $(shell $(CUDA_DIR)/bin/nvcc -V | grep -o 'release [0-9.]*' | tr -d '[a-z ]')
+=======
+		CUDA_VERSION := $(shell $(CUDA_DIR)/bin/nvcc -V | grep -o 'release \d' | grep -o '\d')
+>>>>>>> caffe-yolo/master
 		ifeq ($(shell echo | awk '{exit $(CUDA_VERSION) < 7.0;}'), 1)
 			CXXFLAGS += -stdlib=libstdc++
 			LINKFLAGS += -stdlib=libstdc++
 		endif
 		# clang throws this warning for cuda headers
 		WARNINGS += -Wno-unneeded-internal-declaration
+<<<<<<< HEAD
 		# 10.11 strips DYLD_* env vars so link CUDA (rpath is available on 10.5+)
 		OSX_10_OR_LATER   := $(shell [ $(OSX_MAJOR_VERSION) -ge 10 ] && echo true)
 		OSX_10_5_OR_LATER := $(shell [ $(OSX_MINOR_VERSION) -ge 5 ] && echo true)
@@ -287,14 +318,21 @@ ifeq ($(OSX), 1)
 				LDFLAGS += -Wl,-rpath,$(CUDA_LIB_DIR)
 			endif
 		endif
+=======
+>>>>>>> caffe-yolo/master
 	endif
 	# gtest needs to use its own tuple to not conflict with clang
 	COMMON_FLAGS += -DGTEST_USE_OWN_TR1_TUPLE=1
 	# boost::thread is called boost_thread-mt to mark multithreading on OS X
 	LIBRARIES += boost_thread-mt
 	# we need to explicitly ask for the rpath to be obeyed
+<<<<<<< HEAD
 	ORIGIN := @loader_path
 	VERSIONFLAGS += -Wl,-install_name,@rpath/$(DYNAMIC_VERSIONED_NAME_SHORT) -Wl,-rpath,$(ORIGIN)/../../build/lib
+=======
+	DYNAMIC_FLAGS := -install_name @rpath/libcaffe.so
+	ORIGIN := @loader_path
+>>>>>>> caffe-yolo/master
 else
 	ORIGIN := \$$ORIGIN
 endif
@@ -337,9 +375,12 @@ ifeq ($(USE_LEVELDB), 1)
 endif
 ifeq ($(USE_LMDB), 1)
 	COMMON_FLAGS += -DUSE_LMDB
+<<<<<<< HEAD
 ifeq ($(ALLOW_LMDB_NOLOCK), 1)
 	COMMON_FLAGS += -DALLOW_LMDB_NOLOCK
 endif
+=======
+>>>>>>> caffe-yolo/master
 endif
 
 # CPU-only configuration
@@ -364,9 +405,15 @@ ifeq ($(BLAS), mkl)
 	# MKL
 	LIBRARIES += mkl_rt
 	COMMON_FLAGS += -DUSE_MKL
+<<<<<<< HEAD
 	MKLROOT ?= /opt/intel/mkl
 	BLAS_INCLUDE ?= $(MKLROOT)/include
 	BLAS_LIB ?= $(MKLROOT)/lib $(MKLROOT)/lib/intel64
+=======
+	MKL_DIR ?= /opt/intel/mkl
+	BLAS_INCLUDE ?= $(MKL_DIR)/include
+	BLAS_LIB ?= $(MKL_DIR)/lib $(MKL_DIR)/lib/intel64
+>>>>>>> caffe-yolo/master
 else ifeq ($(BLAS), open)
 	# OpenBLAS
 	LIBRARIES += openblas
@@ -497,7 +544,11 @@ py: $(PY$(PROJECT)_SO) $(PROTO_GEN_PY)
 $(PY$(PROJECT)_SO): $(PY$(PROJECT)_SRC) $(PY$(PROJECT)_HXX) | $(DYNAMIC_NAME)
 	@ echo CXX/LD -o $@ $<
 	$(Q)$(CXX) -shared -o $@ $(PY$(PROJECT)_SRC) \
+<<<<<<< HEAD
 		-o $@ $(LINKFLAGS) -l$(LIBRARY_NAME) $(PYTHON_LDFLAGS) \
+=======
+		-o $@ $(LINKFLAGS) -l$(PROJECT) $(PYTHON_LDFLAGS) \
+>>>>>>> caffe-yolo/master
 		-Wl,-rpath,$(ORIGIN)/../../build/lib
 
 mat$(PROJECT): mat
@@ -561,8 +612,12 @@ $(ALL_BUILD_DIRS): | $(BUILD_DIR_LINK)
 
 $(DYNAMIC_NAME): $(OBJS) | $(LIB_BUILD_DIR)
 	@ echo LD -o $@
+<<<<<<< HEAD
 	$(Q)$(CXX) -shared -o $@ $(OBJS) $(VERSIONFLAGS) $(LINKFLAGS) $(LDFLAGS)
 	@ cd $(BUILD_DIR)/lib; rm -f $(DYNAMIC_NAME_SHORT);   ln -s $(DYNAMIC_VERSIONED_NAME_SHORT) $(DYNAMIC_NAME_SHORT)
+=======
+	$(Q)$(CXX) -shared -o $@ $(OBJS) $(LINKFLAGS) $(LDFLAGS) $(DYNAMIC_FLAGS)
+>>>>>>> caffe-yolo/master
 
 $(STATIC_NAME): $(OBJS) | $(LIB_BUILD_DIR)
 	@ echo AR -o $@
@@ -593,33 +648,57 @@ $(TEST_ALL_BIN): $(TEST_MAIN_SRC) $(TEST_OBJS) $(GTEST_OBJ) \
 		| $(DYNAMIC_NAME) $(TEST_BIN_DIR)
 	@ echo CXX/LD -o $@ $<
 	$(Q)$(CXX) $(TEST_MAIN_SRC) $(TEST_OBJS) $(GTEST_OBJ) \
+<<<<<<< HEAD
 		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(LIBRARY_NAME) -Wl,-rpath,$(ORIGIN)/../lib
+=======
+		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(PROJECT) -Wl,-rpath,$(ORIGIN)/../lib
+>>>>>>> caffe-yolo/master
 
 $(TEST_CU_BINS): $(TEST_BIN_DIR)/%.testbin: $(TEST_CU_BUILD_DIR)/%.o \
 	$(GTEST_OBJ) | $(DYNAMIC_NAME) $(TEST_BIN_DIR)
 	@ echo LD $<
 	$(Q)$(CXX) $(TEST_MAIN_SRC) $< $(GTEST_OBJ) \
+<<<<<<< HEAD
 		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(LIBRARY_NAME) -Wl,-rpath,$(ORIGIN)/../lib
+=======
+		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(PROJECT) -Wl,-rpath,$(ORIGIN)/../lib
+>>>>>>> caffe-yolo/master
 
 $(TEST_CXX_BINS): $(TEST_BIN_DIR)/%.testbin: $(TEST_CXX_BUILD_DIR)/%.o \
 	$(GTEST_OBJ) | $(DYNAMIC_NAME) $(TEST_BIN_DIR)
 	@ echo LD $<
 	$(Q)$(CXX) $(TEST_MAIN_SRC) $< $(GTEST_OBJ) \
+<<<<<<< HEAD
 		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(LIBRARY_NAME) -Wl,-rpath,$(ORIGIN)/../lib
+=======
+		-o $@ $(LINKFLAGS) $(LDFLAGS) -l$(PROJECT) -Wl,-rpath,$(ORIGIN)/../lib
+>>>>>>> caffe-yolo/master
 
 # Target for extension-less symlinks to tool binaries with extension '*.bin'.
 $(TOOL_BUILD_DIR)/%: $(TOOL_BUILD_DIR)/%.bin | $(TOOL_BUILD_DIR)
 	@ $(RM) $@
+<<<<<<< HEAD
 	@ ln -s $(notdir $<) $@
 
 $(TOOL_BINS): %.bin : %.o | $(DYNAMIC_NAME)
 	@ echo CXX/LD -o $@
 	$(Q)$(CXX) $< -o $@ $(LINKFLAGS) -l$(LIBRARY_NAME) $(LDFLAGS) \
+=======
+	@ ln -s $(abspath $<) $@
+
+$(TOOL_BINS): %.bin : %.o | $(DYNAMIC_NAME)
+	@ echo CXX/LD -o $@
+	$(Q)$(CXX) $< -o $@ $(LINKFLAGS) -l$(PROJECT) $(LDFLAGS) \
+>>>>>>> caffe-yolo/master
 		-Wl,-rpath,$(ORIGIN)/../lib
 
 $(EXAMPLE_BINS): %.bin : %.o | $(DYNAMIC_NAME)
 	@ echo CXX/LD -o $@
+<<<<<<< HEAD
 	$(Q)$(CXX) $< -o $@ $(LINKFLAGS) -l$(LIBRARY_NAME) $(LDFLAGS) \
+=======
+	$(Q)$(CXX) $< -o $@ $(LINKFLAGS) -l$(PROJECT) $(LDFLAGS) \
+>>>>>>> caffe-yolo/master
 		-Wl,-rpath,$(ORIGIN)/../../lib
 
 proto: $(PROTO_GEN_CC) $(PROTO_GEN_HEADER)
@@ -671,8 +750,11 @@ superclean: clean supercleanfiles
 $(DIST_ALIASES): $(DISTRIBUTE_DIR)
 
 $(DISTRIBUTE_DIR): all py | $(DISTRIBUTE_SUBDIRS)
+<<<<<<< HEAD
 	# add proto
 	cp -r src/caffe/proto $(DISTRIBUTE_DIR)/
+=======
+>>>>>>> caffe-yolo/master
 	# add include
 	cp -r include $(DISTRIBUTE_DIR)/
 	mkdir -p $(DISTRIBUTE_DIR)/include/caffe/proto
@@ -682,8 +764,12 @@ $(DISTRIBUTE_DIR): all py | $(DISTRIBUTE_SUBDIRS)
 	cp $(EXAMPLE_BINS) $(DISTRIBUTE_DIR)/bin
 	# add libraries
 	cp $(STATIC_NAME) $(DISTRIBUTE_DIR)/lib
+<<<<<<< HEAD
 	install -m 644 $(DYNAMIC_NAME) $(DISTRIBUTE_DIR)/lib
 	cd $(DISTRIBUTE_DIR)/lib; rm -f $(DYNAMIC_NAME_SHORT);   ln -s $(DYNAMIC_VERSIONED_NAME_SHORT) $(DYNAMIC_NAME_SHORT)
+=======
+	cp $(DYNAMIC_NAME) $(DISTRIBUTE_DIR)/lib
+>>>>>>> caffe-yolo/master
 	# add python - it's not the standard way, indeed...
 	cp -r python $(DISTRIBUTE_DIR)/python
 

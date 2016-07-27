@@ -4,9 +4,7 @@
 
 #include <string>
 #include <vector>
-
 #include "lmdb.h"
-
 #include "caffe/util/db.hpp"
 
 namespace caffe { namespace db {

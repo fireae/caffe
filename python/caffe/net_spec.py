@@ -32,7 +32,11 @@ def param_name_dict():
     # get all parameter names (typically underscore case) and corresponding
     # type names (typically camel case), which contain the layer names
     # (note that not all parameters correspond to layers, but we'll ignore that)
+<<<<<<< HEAD
     param_names = [f.name for f in layer.DESCRIPTOR.fields if f.name.endswith('_param')]
+=======
+    param_names = [s for s in dir(layer) if s.endswith('_param')]
+>>>>>>> caffe-yolo/master
     param_type_names = [type(getattr(layer, s)).__name__ for s in param_names]
     # strip the final '_param' or 'Parameter'
     param_names = [s[:-len('_param')] for s in param_names]
@@ -175,12 +179,15 @@ class NetSpec(object):
     def __getattr__(self, name):
         return self.tops[name]
 
+<<<<<<< HEAD
     def __setitem__(self, key, value):
         self.__setattr__(key, value)
 
     def __getitem__(self, item):
         return self.__getattr__(item)
 
+=======
+>>>>>>> caffe-yolo/master
     def to_proto(self):
         names = {v: k for k, v in six.iteritems(self.tops)}
         autonames = Counter()

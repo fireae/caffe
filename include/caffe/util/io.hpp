@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 #include <iomanip>
 #include <iostream>  // NOLINT(readability/streams)
+#include <unistd.h>
 #include <string>
 
 #include "google/protobuf/message.h"

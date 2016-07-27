@@ -44,6 +44,7 @@ class ParameterLayer(caffe.Layer):
     def backward(self, top, propagate_down, bottom):
         self.blobs[0].diff[0] = 1
 
+<<<<<<< HEAD
 class PhaseLayer(caffe.Layer):
     """A layer for checking attribute `phase`"""
 
@@ -56,6 +57,8 @@ class PhaseLayer(caffe.Layer):
     def forward(self, bottom, top):
         top[0].data[()] = self.phase
 
+=======
+>>>>>>> caffe-yolo/master
 def python_net_file():
     with tempfile.NamedTemporaryFile(mode='w+', delete=False) as f:
         f.write("""name: 'pythonnet' force_backward: true
@@ -88,6 +91,7 @@ def parameter_net_file():
           """)
         return f.name
 
+<<<<<<< HEAD
 def phase_net_file():
     with tempfile.NamedTemporaryFile(mode='w+', delete=False) as f:
         f.write("""name: 'pythonnet' force_backward: true
@@ -99,6 +103,9 @@ def phase_net_file():
 
 @unittest.skipIf('Python' not in caffe.layer_type_list(),
     'Caffe built without Python layer support')
+=======
+
+>>>>>>> caffe-yolo/master
 class TestPythonLayer(unittest.TestCase):
     def setUp(self):
         net_file = python_net_file()
@@ -160,9 +167,12 @@ class TestPythonLayer(unittest.TestCase):
         self.assertEqual(layer.blobs[0].data[0], 1)
 
         os.remove(net_file)
+<<<<<<< HEAD
 
     def test_phase(self):
         net_file = phase_net_file()
         for phase in caffe.TRAIN, caffe.TEST:
             net = caffe.Net(net_file, phase)
             self.assertEqual(net.forward()['phase'], phase)
+=======
+>>>>>>> caffe-yolo/master

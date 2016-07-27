@@ -22,6 +22,7 @@ if(UNIX OR APPLE)
 endif()
 
 # ---[ Install
+
 # scripts
 file(GLOB python_files *.py requirements.txt)
 install(FILES ${python_files} DESTINATION python)

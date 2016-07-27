@@ -93,3 +93,19 @@ LOCK
 LOG*
 CURRENT
 MANIFEST-*
+=======
+#solition files
+caffe.cloc
+caffe.kdev4
+
+#build files
+build/*
+build
+.build*
+*.so
+*.py
+
+#makefile 
+Makefile.config
+Makefile
+CMakeLists.txt

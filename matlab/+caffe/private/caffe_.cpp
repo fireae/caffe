@@ -504,6 +504,7 @@ static void write_mean(MEX_ARGS) {
   mxFree(mean_proto_file);
 }
 
+<<<<<<< HEAD
 // Usage: caffe_('version')
 static void version(MEX_ARGS) {
   mxCHECK(nrhs == 0, "Usage: caffe_('version')");
@@ -511,6 +512,8 @@ static void version(MEX_ARGS) {
   plhs[0] = mxCreateString(AS_STRING(CAFFE_VERSION));
 }
 
+=======
+>>>>>>> caffe-yolo/master
 /** -----------------------------------------------------------------
  ** Available commands.
  **/
@@ -549,7 +552,10 @@ static handler_registry handlers[] = {
   { "reset",              reset           },
   { "read_mean",          read_mean       },
   { "write_mean",         write_mean      },
+<<<<<<< HEAD
   { "version",            version         },
+=======
+>>>>>>> caffe-yolo/master
   // The end.
   { "END",                NULL            },
 };

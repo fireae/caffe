@@ -3,7 +3,6 @@
 #endif
 #include <glog/logging.h>
 #include <stdio.h>
-
 #include <sstream>
 #include <string>
 #include <vector>

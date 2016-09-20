@@ -5,8 +5,8 @@
 #include <vector>
 
 #include "boost/scoped_ptr.hpp"
-#include "gflags/gflags.h"
-#include "glog/logging.h"
+#include "caffe/flags.hpp"
+#include "caffe/logging.h"
 
 #include "caffe/proto/caffe.pb.h"
 #include "caffe/util/db.hpp"
@@ -18,26 +18,26 @@ using std::max;
 using std::pair;
 using boost::scoped_ptr;
 
-DEFINE_string(backend, "lmdb",
+CAFFE_DEFINE_string(backend, "lmdb",
         "The backend {leveldb, lmdb} containing the images");
 
 int main(int argc, char** argv) {
-  ::google::InitGoogleLogging(argv[0]);
+  caffe::InitLogging(argv[0]);
 
 #ifdef USE_OPENCV
 #ifndef GFLAGS_GFLAGS_H_
-  namespace gflags = google;
+  //namespace gflags = google;
 #endif
 
-  gflags::SetUsageMessage("Compute the mean_image of a set of images given by"
+  caffe::SetUsageMessage("Compute the mean_image of a set of images given by"
         " a leveldb/lmdb\n"
         "Usage:\n"
         "    compute_image_mean [FLAGS] INPUT_DB [OUTPUT_FILE]\n");
 
-  gflags::ParseCommandLineFlags(&argc, &argv, true);
+  caffe::ParseCaffeCommandLineFlags(&argc, &argv);
 
   if (argc < 2 || argc > 3) {
-    gflags::ShowUsageWithFlagsRestrict(argv[0], "tools/compute_image_mean");
+    caffe::ShowUsageWithFlagsRestrict(argv[0], "tools/compute_image_mean");
     return 1;
   }
 

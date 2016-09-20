@@ -2,8 +2,8 @@
 #define CAFFE_COMMON_HPP_
 
 #include <boost/shared_ptr.hpp>
-#include <gflags/gflags.h>
-#include <glog/logging.h>
+//#include "caffe/flags.hpp"
+#include "caffe/logging.h"
 
 #include <climits>
 #include <cmath>
@@ -28,7 +28,7 @@
 // TODO(Yangqing): Once gflags solves the problem in a more elegant way, let's
 // remove the following hack.
 #ifndef GFLAGS_GFLAGS_H_
-namespace gflags = google;
+//namespace gflags = google;
 #endif  // GFLAGS_GFLAGS_H_
 
 // Disable the copy and assignment operator for a class.

@@ -3,8 +3,9 @@
 
 #include <stdint.h>
 #include <cmath>  // for std::fabs and std::signbit
+#include <cstring>
 
-#include "glog/logging.h"
+#include "caffe/logging.h"
 
 #include "caffe/common.hpp"
 #include "caffe/util/device_alternate.hpp"

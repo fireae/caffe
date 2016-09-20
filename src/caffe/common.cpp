@@ -1,11 +1,12 @@
 #include <boost/thread.hpp>
-#include <glog/logging.h>
+#include "caffe/logging.h"
 #include <cmath>
 #include <cstdio>
 #include <ctime>
 
 #include "caffe/common.hpp"
 #include "caffe/util/rng.hpp"
+#include "caffe/flags.hpp"
 
 namespace caffe {
 
@@ -42,11 +43,11 @@ int64_t cluster_seedgen(void) {
 
 void GlobalInit(int* pargc, char*** pargv) {
   // Google flags.
-  ::gflags::ParseCommandLineFlags(pargc, pargv, true);
+  ::caffe::ParseCaffeCommandLineFlags(pargc, pargv);
   // Google logging.
-  ::google::InitGoogleLogging(*(pargv)[0]);
+  ::caffe::InitLogging(*(pargv)[0]);
   // Provide a backtrace on segfault.
-  ::google::InstallFailureSignalHandler();
+  //::google::InstallFailureSignalHandler();
 }
 
 #ifdef CPU_ONLY  // CPU-only Caffe.

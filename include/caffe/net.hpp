@@ -82,7 +82,6 @@ class Net {
    * a forward pass, e.g. to compute output feature size.
    */
   void Reshape();
-
   Dtype ForwardBackward() {
     Dtype loss;
     Forward(&loss);
@@ -241,7 +240,6 @@ class Net {
   /// @brief Append a new parameter blob to the net.
   void AppendParam(const NetParameter& param, const int layer_id,
                    const int param_id);
-
   /// @brief Helper for displaying debug info in Forward.
   void ForwardDebugInfo(const int layer_id);
   /// @brief Helper for displaying debug info in Backward.

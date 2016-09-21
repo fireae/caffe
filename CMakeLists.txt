@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.8.7)
+
 if(POLICY CMP0046)
   cmake_policy(SET CMP0046 NEW)
 endif()
@@ -13,7 +14,7 @@ project(Caffe C CXX)
 set(CAFFE_TARGET_VERSION "1.0.0-rc3" CACHE STRING "Caffe logical version")
 set(CAFFE_TARGET_SOVERSION "1.0.0-rc3" CACHE STRING "Caffe soname version")
 add_definitions(-DCAFFE_VERSION=${CAFFE_TARGET_VERSION})
-
+set(CMAKE_PREFIX_PATH "/usr/local/lib")
 # ---[ Using cmake scripts and modules
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
 
@@ -85,6 +86,7 @@ if(BUILD_python)
   add_custom_target(pytest COMMAND python${python_version} -m unittest discover -s caffe/test WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/python )
   add_dependencies(pytest pycaffe)
 endif()
+
 
 # ---[ Configuration summary
 caffe_print_configuration_summary()

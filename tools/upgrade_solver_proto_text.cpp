@@ -45,7 +45,6 @@ int main(int argc, char** argv) {
 
   // Save new format prototxt.
   WriteProtoToTextFile(solver_param, argv[2]);
-
   LOG(INFO) << "Wrote upgraded SolverParameter text proto to " << argv[2];
   return !success;
 }

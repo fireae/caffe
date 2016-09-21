@@ -351,6 +351,7 @@ function(caffe_parse_linker_libs Caffe_LINKER_LIBS_variable folders_var flags_va
       string(REGEX REPLACE "\\.[^.]*$" "" filename_without_shortest_ext ${filename})
 
       string(REGEX MATCH "^lib(.*)" __match ${filename_without_shortest_ext})
+
       list(APPEND libflags -l${CMAKE_MATCH_1})
       list(APPEND folders    ${folder})
     else()

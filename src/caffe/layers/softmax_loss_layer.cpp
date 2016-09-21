@@ -25,6 +25,7 @@ void SoftmaxWithLossLayer<Dtype>::LayerSetUp(
   if (has_ignore_label_) {
     ignore_label_ = this->layer_param_.loss_param().ignore_label();
   }
+
   if (!this->layer_param_.loss_param().has_normalization() &&
       this->layer_param_.loss_param().has_normalize()) {
     normalization_ = this->layer_param_.loss_param().normalize() ?
@@ -108,6 +109,7 @@ void SoftmaxWithLossLayer<Dtype>::Forward_cpu(
       ++count;
     }
   }
+
   top[0]->mutable_cpu_data()[0] = loss / get_normalizer(normalization_, count);
   if (top.size() == 2) {
     top[1]->ShareData(prob_);

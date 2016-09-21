@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 # This script converts the cifar data into leveldb format.
+<<<<<<< HEAD
 set -e
+=======
+>>>>>>> caffe-yolo/master
 
 EXAMPLE=examples/cifar10
 DATA=data/cifar10

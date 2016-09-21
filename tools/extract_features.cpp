@@ -181,3 +181,4 @@ int feature_extraction_pipeline(int argc, char** argv) {
   LOG(ERROR)<< "Successfully extracted the features!";
   return 0;
 }
+

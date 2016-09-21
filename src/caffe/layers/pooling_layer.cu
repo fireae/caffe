@@ -2,8 +2,14 @@
 #include <cfloat>
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/layers/pooling_layer.hpp"
 #include "caffe/util/math_functions.hpp"
+=======
+#include "caffe/layer.hpp"
+#include "caffe/util/math_functions.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

@@ -370,6 +370,16 @@ layer {
   }
 }
 layer {
+<<<<<<< HEAD
+=======
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "fc8_flickr"
+  bottom: "label"
+  top: "loss"
+}
+layer {
+>>>>>>> caffe-yolo/master
   name: "accuracy"
   type: "Accuracy"
   bottom: "fc8_flickr"
@@ -379,6 +389,7 @@ layer {
     phase: TEST
   }
 }
+<<<<<<< HEAD
 layer {
   name: "loss"
   type: "SoftmaxWithLoss"
@@ -386,3 +397,5 @@ layer {
   bottom: "label"
   top: "loss"
 }
+=======
+>>>>>>> caffe-yolo/master

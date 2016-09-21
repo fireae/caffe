@@ -1,9 +1,17 @@
 // TanH neuron activation function layer.
 // Adapted from ReLU layer code written by Yangqing Jia
 
+<<<<<<< HEAD
 #include <vector>
 
 #include "caffe/layers/tanh_layer.hpp"
+=======
+#include <algorithm>
+#include <vector>
+
+#include "caffe/layer.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

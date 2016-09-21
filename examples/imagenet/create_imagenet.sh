@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 # Create the imagenet lmdb inputs
 # N.B. set the path to the imagenet train + val data dirs
+<<<<<<< HEAD
 set -e
+=======
+>>>>>>> caffe-yolo/master
 
 EXAMPLE=examples/imagenet
 DATA=data/ilsvrc12

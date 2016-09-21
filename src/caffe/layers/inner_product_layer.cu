@@ -1,8 +1,17 @@
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/filler.hpp"
 #include "caffe/layers/inner_product_layer.hpp"
 #include "caffe/util/math_functions.hpp"
+=======
+#include "caffe/blob.hpp"
+#include "caffe/common.hpp"
+#include "caffe/filler.hpp"
+#include "caffe/layer.hpp"
+#include "caffe/util/math_functions.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 
@@ -19,9 +28,13 @@ void InnerProductLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
       caffe_gpu_axpy<Dtype>(N_, bias_multiplier_.cpu_data()[0],
                             this->blobs_[1]->gpu_data(), top_data);
   } else {
+<<<<<<< HEAD
     caffe_gpu_gemm<Dtype>(CblasNoTrans,
                           transpose_ ? CblasNoTrans : CblasTrans,
                           M_, N_, K_, (Dtype)1.,
+=======
+    caffe_gpu_gemm<Dtype>(CblasNoTrans, CblasTrans, M_, N_, K_, (Dtype)1.,
+>>>>>>> caffe-yolo/master
                           bottom_data, weight, (Dtype)0., top_data);
     if (bias_term_)
       caffe_gpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, M_, N_, 1, (Dtype)1.,
@@ -38,6 +51,7 @@ void InnerProductLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
     const Dtype* top_diff = top[0]->gpu_diff();
     const Dtype* bottom_data = bottom[0]->gpu_data();
     // Gradient with respect to weight
+<<<<<<< HEAD
     if (transpose_) {
       caffe_gpu_gemm<Dtype>(CblasTrans, CblasNoTrans,
           K_, N_, M_,
@@ -49,6 +63,10 @@ void InnerProductLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
           (Dtype)1., top_diff, bottom_data,
           (Dtype)1., this->blobs_[0]->mutable_gpu_diff());
     }
+=======
+    caffe_gpu_gemm<Dtype>(CblasTrans, CblasNoTrans, N_, K_, M_, (Dtype)1.,
+        top_diff, bottom_data, (Dtype)1., this->blobs_[0]->mutable_gpu_diff());
+>>>>>>> caffe-yolo/master
   }
   if (bias_term_ && this->param_propagate_down_[1]) {
     const Dtype* top_diff = top[0]->gpu_diff();
@@ -60,6 +78,7 @@ void InnerProductLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
   if (propagate_down[0]) {
     const Dtype* top_diff = top[0]->gpu_diff();
     // Gradient with respect to bottom data
+<<<<<<< HEAD
     if (transpose_) {
       caffe_gpu_gemm<Dtype>(CblasNoTrans, CblasTrans,
           M_, K_, N_,
@@ -71,6 +90,11 @@ void InnerProductLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
          (Dtype)1., top_diff, this->blobs_[0]->gpu_data(),
          (Dtype)0., bottom[0]->mutable_gpu_diff());
     }
+=======
+    caffe_gpu_gemm<Dtype>(CblasNoTrans, CblasNoTrans, M_, K_, N_, (Dtype)1.,
+        top_diff, this->blobs_[0]->gpu_data(), (Dtype)0.,
+        bottom[0]->mutable_gpu_diff());
+>>>>>>> caffe-yolo/master
   }
 }
 

@@ -191,6 +191,7 @@ void Classifier::Preprocess(const cv::Mat& img,
   /* Convert the input image to the input image format of the network. */
   cv::Mat sample;
   if (img.channels() == 3 && num_channels_ == 1)
+
     cv::cvtColor(img, sample, cv::COLOR_BGR2GRAY);
   else if (img.channels() == 4 && num_channels_ == 1)
     cv::cvtColor(img, sample, cv::COLOR_BGRA2GRAY);

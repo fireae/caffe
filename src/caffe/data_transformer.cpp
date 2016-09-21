@@ -1,5 +1,5 @@
 #ifdef USE_OPENCV
-#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
 #endif  // USE_OPENCV
 
 #include <string>
@@ -276,16 +276,29 @@ void DataTransformer<Dtype>::Transform(const cv::Mat& cv_img,
   if (crop_size) {
     CHECK_EQ(crop_size, height);
     CHECK_EQ(crop_size, width);
-    // We only do random crop when we do training.
+//  [10/15/2015 zhangz] expand image height and width
+    cv::Mat cv_copy_img = cv_img;
+    int copy_img_height = img_height;
+    int copy_img_width = img_width;
+    if (height > img_height || width > img_width) {
+	double width_ratio = ceil(double(width) / img_width);
+	double height_ratio = ceil(double(height) / img_height);
+	double expand_ratio = width_ratio > height_ratio? width_ratio : height_ratio ;
+	copy_img_width *= expand_ratio;
+	copy_img_height *= expand_ratio;
+	cv::resize(cv_copy_img, cv_copy_img, cvSize(copy_img_width, copy_img_height));
+    }
+//  [10/15/2015 zhangz]
+// We only do random crop when we do training.
     if (phase_ == TRAIN) {
-      h_off = Rand(img_height - crop_size + 1);
-      w_off = Rand(img_width - crop_size + 1);
+      h_off = Rand(copy_img_height - crop_size + 1);
+      w_off = Rand(copy_img_width - crop_size + 1);
     } else {
-      h_off = (img_height - crop_size) / 2;
-      w_off = (img_width - crop_size) / 2;
+      h_off = (copy_img_height - crop_size) / 2;
+      w_off = (copy_img_width - crop_size) / 2;
     }
     cv::Rect roi(w_off, h_off, crop_size, crop_size);
-    cv_cropped_img = cv_img(roi);
+    cv_cropped_img = cv_copy_img(roi);
   } else {
     CHECK_EQ(img_height, height);
     CHECK_EQ(img_width, width);

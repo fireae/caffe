@@ -4,8 +4,14 @@
 
 #include "thrust/device_vector.h"
 
+<<<<<<< HEAD
 #include "caffe/layers/softmax_layer.hpp"
 #include "caffe/util/math_functions.hpp"
+=======
+#include "caffe/layer.hpp"
+#include "caffe/util/math_functions.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

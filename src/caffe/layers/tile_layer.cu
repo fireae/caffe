@@ -1,6 +1,11 @@
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/layers/tile_layer.hpp"
+=======
+#include "caffe/common_layers.hpp"
+#include "caffe/layer.hpp"
+>>>>>>> caffe-yolo/master
 #include "caffe/util/math_functions.hpp"
 
 namespace caffe {

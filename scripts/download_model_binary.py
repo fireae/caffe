@@ -18,7 +18,11 @@ def reporthook(count, block_size, total_size):
     if count == 0:
         start_time = time.time()
         return
+<<<<<<< HEAD
     duration = (time.time() - start_time) or 0.01
+=======
+    duration = time.time() - start_time
+>>>>>>> caffe-yolo/master
     progress_size = int(count * block_size)
     speed = int(progress_size / (1024 * duration))
     percent = int(count * block_size * 100 / total_size)
@@ -60,7 +64,11 @@ if __name__ == '__main__':
 
     # Closure-d function for checking SHA1.
     def model_checks_out(filename=model_filename, sha1=frontmatter['sha1']):
+<<<<<<< HEAD
         with open(filename, 'rb') as f:
+=======
+        with open(filename, 'r') as f:
+>>>>>>> caffe-yolo/master
             return hashlib.sha1(f.read()).hexdigest() == sha1
 
     # Check if model exists.

@@ -1,7 +1,12 @@
 #include <algorithm>
 #include <vector>
 
+<<<<<<< HEAD
 #include "caffe/layers/relu_layer.hpp"
+=======
+#include "caffe/layer.hpp"
+#include "caffe/vision_layers.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

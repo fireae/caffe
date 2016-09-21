@@ -4,12 +4,22 @@ TODO:
 */
 #ifdef USE_HDF5
 #include <stdint.h>
+<<<<<<< HEAD
+=======
+#include <string>
+>>>>>>> caffe-yolo/master
 #include <vector>
 
 #include "hdf5.h"
 #include "hdf5_hl.h"
 
+<<<<<<< HEAD
 #include "caffe/layers/hdf5_data_layer.hpp"
+=======
+#include "caffe/data_layers.hpp"
+#include "caffe/layer.hpp"
+#include "caffe/util/io.hpp"
+>>>>>>> caffe-yolo/master
 
 namespace caffe {
 

@@ -38,8 +38,11 @@ def python_param_net_file():
         return f.name
 
 
+<<<<<<< HEAD
 @unittest.skipIf('Python' not in caffe.layer_type_list(),
     'Caffe built without Python layer support')
+=======
+>>>>>>> caffe-yolo/master
 class TestLayerWithParam(unittest.TestCase):
     def setUp(self):
         net_file = python_param_net_file()

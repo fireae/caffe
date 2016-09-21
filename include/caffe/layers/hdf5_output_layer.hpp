@@ -1,3 +1,4 @@
+#ifdef USE_HDF5
 #ifndef CAFFE_HDF5_OUTPUT_LAYER_HPP_
 #define CAFFE_HDF5_OUTPUT_LAYER_HPP_
 
@@ -62,3 +63,4 @@ class HDF5OutputLayer : public Layer<Dtype> {
 }  // namespace caffe
 
 #endif  // CAFFE_HDF5_OUTPUT_LAYER_HPP_
+#endif //USE_HDF5

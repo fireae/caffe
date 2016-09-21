@@ -3,9 +3,13 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_HDF5
+#include "caffe/util/hdf5.hpp"
+#endif //USE_HDF5
+
 #include "caffe/solver.hpp"
 #include "caffe/util/format.hpp"
-#include "caffe/util/hdf5.hpp"
+
 #include "caffe/util/io.hpp"
 #include "caffe/util/upgrade_proto.hpp"
 
@@ -460,9 +464,12 @@ string Solver<Dtype>::SnapshotToBinaryProto() {
 
 template <typename Dtype>
 string Solver<Dtype>::SnapshotToHDF5() {
+
   string model_filename = SnapshotFilename(".caffemodel.h5");
   LOG(INFO) << "Snapshotting to HDF5 file " << model_filename;
+#ifdef USE_HDF5
   net_->ToHDF5(model_filename, param_.snapshot_diff());
+#endif //USE_HDF5
   return model_filename;
 }
 

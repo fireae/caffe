@@ -1,3 +1,4 @@
+#ifdef USE_HDF5
 #ifndef CAFFE_HDF5_DATA_LAYER_HPP_
 #define CAFFE_HDF5_DATA_LAYER_HPP_
 
@@ -60,3 +61,4 @@ class HDF5DataLayer : public Layer<Dtype> {
 }  // namespace caffe
 
 #endif  // CAFFE_HDF5_DATA_LAYER_HPP_
+#endif //USE_HDF5

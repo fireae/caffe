@@ -27,7 +27,7 @@ class MongoDBCursor : public Cursor {
     SeekToFirst();
   }
   virtual ~MongoDBCursor() {
-      mongoc_cursor_destroy(cursor_);
+      //mongoc_cursor_destroy(cursor_);
   }
   virtual void SeekToFirst() { Seek(); }
   virtual void Next() { Seek(); }

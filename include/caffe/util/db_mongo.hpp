@@ -24,6 +24,7 @@ class MongoDBCursor : public Cursor {
   int new_width, int new_height, int channels)
     : cursor_(cursor), valid_(false), label_field_(label_field), image_field_(image_field), 
       label_map_(label_map), new_width_(new_width), new_height_(new_height), channels_(channels) {
+        cursor_start_ = mongoc_cursor_clone(cursor_);
     SeekToFirst();
   }
   virtual ~MongoDBCursor() {
@@ -40,7 +41,7 @@ class MongoDBCursor : public Cursor {
   virtual string value() {
     bson_iter_t iter;
     int label_index = -1;
-    LOG(INFO) << "start label";
+    //LOG(INFO) << "start label";
     if (bson_iter_init (&iter, doc_) &&
       bson_iter_find (&iter, label_field_.c_str())) {
       const bson_value_t *label_value = bson_iter_value(&iter);
@@ -48,7 +49,7 @@ class MongoDBCursor : public Cursor {
       if (label_map_.find(label) != label_map_.end()) {
         label_index = label_map_[label];
       }
-      LOG(INFO) << "label is " << label << "label index " << label_index;
+      //LOG(INFO) << "label is " << label << "label index " << label_index;
     }
     if (label_index == -1) {
       Next();
@@ -58,7 +59,7 @@ class MongoDBCursor : public Cursor {
     Datum datum;
     if (bson_iter_init (&iter, doc_) &&
       bson_iter_find (&iter, image_field_.c_str())) {
-      LOG(INFO) << "key is " << bson_iter_key(&iter);
+      //LOG(INFO) << "key is " << bson_iter_key(&iter);
       const bson_value_t *value = bson_iter_value(&iter);
       //LOG(INFO) << "value is " << bson_iter_value (&iter)->value.v_binary.data;
       cv::Mat image = cv::imdecode(cv::Mat(1, value->value.v_binary.data_len, CV_8UC1, value->value.v_binary.data), cv::IMREAD_COLOR);
@@ -83,7 +84,9 @@ class MongoDBCursor : public Cursor {
   void Seek() {
       bson_error_t error;
       if (mongoc_cursor_error(cursor_, &error)) {
-        
+        LOG(INFO) << "Seek to First";
+        cursor_ = mongoc_cursor_clone(cursor_start_);
+        mongoc_cursor_next(cursor_, &doc_);
       } else {
         mongoc_cursor_next(cursor_, &doc_);
       }
@@ -92,6 +95,7 @@ class MongoDBCursor : public Cursor {
 
   const bson_t *doc_;
   mongoc_cursor_t *cursor_;
+  mongoc_cursor_t *cursor_start_;
   bool valid_;
   std::string label_field_;
   std::string image_field_;

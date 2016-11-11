@@ -36,7 +36,7 @@ void MongoDB::SetLabelTxt(std::string label_txt) {
     int pos = line.find_last_of(' ');
     string label = line.substr(0, pos);
     //string label = line.substr(line.length() - 1);
-    LOG(INFO) << "label map key: " << label << ", value " << label_index; 
+    //LOG(INFO) << "label map key: " << label << ", value " << label_index; 
     label_map_.insert(std::map<std::string, int>::value_type(label, label_index++));
   }
 }
@@ -47,9 +47,7 @@ MongoDBCursor* MongoDB::NewCursor() {
   bson_init(&query);
   collection_ = mongoc_client_get_collection(client_, db_name_.c_str(), collection_name_.c_str());
   cursor_ = mongoc_collection_find(collection_, MONGOC_QUERY_NONE, 0, 0, 0, 
-                            &query, NULL, NULL);
-  LOG(INFO) << "new cursor";
-  //bson_destroy (query);
+                                  &query, NULL, NULL);
   return new MongoDBCursor(cursor_, label_field_, image_field_, label_map_,
     new_width_, new_height_, channels_);
 }

@@ -41,7 +41,7 @@ class DB {
   virtual void Close() = 0;
   virtual Cursor* NewCursor() = 0;
   virtual Transaction* NewTransaction() = 0;
-
+  virtual void set_data_param(const caffe::DataParameter &data_param) {}
   DISABLE_COPY_AND_ASSIGN(DB);
 };
 

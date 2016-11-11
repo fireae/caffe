@@ -8,16 +8,24 @@ layer {
     phase: TRAIN
   }
   transform_param {
-    mean_file: "examples/cifar10/mean.binaryproto"
+    #mean_file: "examples/cifar10/mean.binaryproto"
   }
   data_param {
-    source: "examples/cifar10/cifar10_train_lmdb"
+    source: "mongodb://192.168.1.135"
+    db_name: "test"
+    collection_name: "sex"
+    new_height: 32
+    new_width: 32
+    channels: 3
+    label_field: "label"
+    image_field: "image_content"
+    label_txt: "label_sex.txt"
     batch_size: 100
-    backend: LMDB
+    backend: MONGO
   }
 }
 layer {
-  name: "cifar"
+  name: "cifar2"
   type: "Data"
   top: "data"
   top: "label"
@@ -25,12 +33,20 @@ layer {
     phase: TEST
   }
   transform_param {
-    mean_file: "examples/cifar10/mean.binaryproto"
+    #mean_file: "examples/cifar10/mean.binaryproto"
   }
   data_param {
-    source: "examples/cifar10/cifar10_test_lmdb"
+    source: "mongodb://192.168.1.135"
+    db_name: "test"
+    collection_name: "sex"
+    new_height: 32
+    new_width: 32
+    channels: 3
+    label_field: "label"
+    image_field: "image_content"
+    label_txt: "label_sex.txt"
     batch_size: 100
-    backend: LMDB
+    backend: MONGO
   }
 }
 layer {
@@ -193,7 +209,7 @@ layer {
     lr_mult: 2
   }
   inner_product_param {
-    num_output: 10
+    num_output: 2
     weight_filler {
       type: "gaussian"
       std: 0.1

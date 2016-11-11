@@ -66,6 +66,8 @@ class DataReader {
   // A source is uniquely identified by its layer name + path, in case
   // the same database is read from two different locations in the net.
   static inline string source_key(const LayerParameter& param) {
+    string db_source_key = param.name() + ":" + param.data_param().source();
+    LOG(INFO) << "source key " << db_source_key;
     return param.name() + ":" + param.data_param().source();
   }
 

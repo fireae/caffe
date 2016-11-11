@@ -72,7 +72,10 @@ DataReader::Body::~Body() {
 
 void DataReader::Body::InternalThreadEntry() {
   shared_ptr<db::DB> db(db::GetDB(param_.data_param().backend()));
+  LOG(INFO) << "begin open db " ;
+  db->set_data_param(param_.data_param());
   db->Open(param_.data_param().source(), db::READ);
+  LOG(INFO) << "open db ok";
   shared_ptr<db::Cursor> cursor(db->NewCursor());
   vector<shared_ptr<QueuePair> > qps;
   try {

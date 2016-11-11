@@ -1,6 +1,7 @@
 #include "caffe/util/db.hpp"
 #include "caffe/util/db_leveldb.hpp"
 #include "caffe/util/db_lmdb.hpp"
+#include "caffe/util/db_mongo.hpp"
 
 #include <string>
 
@@ -16,8 +17,14 @@ DB* GetDB(DataParameter::DB backend) {
   case DataParameter_DB_LMDB:
     return new LMDB();
 #endif  // USE_LMDB
+
+//#ifdef USE_MONGO
+  case DataParameter_DB_MONGO:
+    LOG(INFO) << "mongo db";
+    return new MongoDB();
+//#endif  // USE_MONGO
   default:
-    LOG(FATAL) << "Unknown database backend";
+    LOG(INFO) << "Unknown database backend " << backend;
     return NULL;
   }
 }
@@ -33,6 +40,13 @@ DB* GetDB(const string& backend) {
     return new LMDB();
   }
 #endif  // USE_LMDB
+
+#ifdef USE_MONGO
+  if (backend == "mongo") {
+    return new MongoDB();
+  }
+#endif //USE_MONGO
+
   LOG(FATAL) << "Unknown database backend";
   return NULL;
 }

@@ -628,6 +628,7 @@ message DataParameter {
   enum DB {
     LEVELDB = 0;
     LMDB = 1;
+    MONGO = 2;
   }
   // Specify the data source.
   optional string source = 1;
@@ -656,6 +657,16 @@ message DataParameter {
   // Prefetch queue (Number of batches to prefetch to host memory, increase if
   // data access bandwidth varies).
   optional uint32 prefetch = 10 [default = 4];
+
+  optional uint32 new_height = 11 [default = 32];
+  optional uint32 new_width = 12 [default = 32];
+  optional uint32 channels = 13 [default = 3];
+  optional string label_txt = 14;
+  optional string db_name = 15;
+  optional string collection_name = 16;
+  optional string label_field = 17;
+  optional string image_field = 18;
+  
 }
 
 message DropoutParameter {

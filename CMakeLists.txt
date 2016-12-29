@@ -36,7 +36,7 @@ caffe_option(BUILD_matlab "Build Matlab wrapper" OFF IF UNIX OR APPLE)
 caffe_option(BUILD_docs   "Build documentation" ON IF UNIX OR APPLE)
 caffe_option(BUILD_python_layer "Build the Caffe Python layer" ON)
 caffe_option(USE_OPENCV "Build with OpenCV support" ON)
-caffe_option(USE_LEVELDB "Build with levelDB" ON)
+caffe_option(USE_LEVELDB "Build with levelDB" OFF)
 caffe_option(USE_LMDB "Build with lmdb" ON)
 caffe_option(USE_HDF5 "Build with hdf5" ON)
 caffe_option(ALLOW_LMDB_NOLOCK "Allow MDB_NOLOCK when reading LMDB files (only if necessary)" OFF)
@@ -56,7 +56,7 @@ if(USE_libstdcpp)
   message("-- Warning: forcing libstdc++ (controlled by USE_libstdcpp option in cmake)")
 endif()
 
-add_definitions(-DGTEST_USE_OWN_TR1_TUPLE)
+#add_definitions(-DGTEST_USE_OWN_TR1_TUPLE)
 
 # ---[ Warnings
 caffe_warnings_disable(CMAKE_CXX_FLAGS -Wno-sign-compare -Wno-uninitialized)

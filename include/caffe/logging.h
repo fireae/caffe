@@ -5,8 +5,8 @@
  *  allows use of GLOG, fall back to internal
  *  implementation when disabled
  */
-#ifndef DMLC_LOGGING_H_
-#define DMLC_LOGGING_H_
+#ifndef CAFFE_LOGGING_H_
+#define CAFFE_LOGGING_H_
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -27,7 +27,7 @@ struct Error : public std::runtime_error {
 };
 }  // namespace dmlc
 
-#if DMLC_USE_GLOG
+#if CAFFE_USE_GLOG
 #include <glog/logging.h>
 
 namespace caffe {
@@ -258,4 +258,4 @@ class LogMessageVoidify {
 }  // namespace dmlc
 
 #endif
-#endif  // DMLC_LOGGING_H_
+#endif  // CAFFE_LOGGING_H_

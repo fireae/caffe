@@ -12,7 +12,7 @@
 #cmakedefine USE_CUDNN
 
 /* NVIDA cuDNN */
-#cmakedefine CPU_ONLY
+#cmakedefine USE_CUDA
 
 /* Test device */
 #define CUDA_TEST_DEVICE ${CUDA_TEST_DEVICE}

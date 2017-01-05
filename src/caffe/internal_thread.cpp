@@ -22,7 +22,7 @@ void InternalThread::StartInternalThread() {
   CHECK(!is_started()) << "Threads should persist and not be restarted.";
 
   int device = 0;
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   CUDA_CHECK(cudaGetDevice(&device));
 #endif
   Caffe::Brew mode = Caffe::mode();
@@ -40,7 +40,7 @@ void InternalThread::StartInternalThread() {
 
 void InternalThread::entry(int device, Caffe::Brew mode, int rand_seed,
     int solver_count, bool root_solver) {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   CUDA_CHECK(cudaSetDevice(device));
 #endif
   Caffe::set_mode(mode);

@@ -1,4 +1,4 @@
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
 #include <cuda_runtime.h>
 #endif
 #include "caffe/logging.h"
@@ -75,7 +75,7 @@ Params<Dtype>::Params(shared_ptr<Solver<Dtype> > root_solver)
 template<typename Dtype>
 GPUParams<Dtype>::GPUParams(shared_ptr<Solver<Dtype> > root_solver, int device)
     : Params<Dtype>(root_solver) {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   int initial_device;
   CUDA_CHECK(cudaGetDevice(&initial_device));
 
@@ -99,7 +99,7 @@ GPUParams<Dtype>::GPUParams(shared_ptr<Solver<Dtype> > root_solver, int device)
 
 template<typename Dtype>
 GPUParams<Dtype>::~GPUParams() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   CUDA_CHECK(cudaFree(data_));
   CUDA_CHECK(cudaFree(diff_));
 #endif
@@ -114,7 +114,7 @@ void GPUParams<Dtype>::configure(Solver<Dtype>* solver) const {
 }
 
 void DevicePair::compute(const vector<int> devices, vector<DevicePair>* pairs) {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   vector<int> remaining(devices);
 
   // Depth for reduction tree
@@ -206,7 +206,7 @@ P2PSync<Dtype>::P2PSync(shared_ptr<Solver<Dtype> > root_solver,
       queue_(),
       initial_iter_(root_solver->iter()),
       solver_() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   int initial_device;
   CUDA_CHECK(cudaGetDevice(&initial_device));
   const int self = param.device_id();
@@ -246,7 +246,7 @@ P2PSync<Dtype>::P2PSync(shared_ptr<Solver<Dtype> > root_solver,
 
 template<typename Dtype>
 P2PSync<Dtype>::~P2PSync() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   int initial_device;
   CUDA_CHECK(cudaGetDevice(&initial_device));
   const int self = solver_->param().device_id();
@@ -284,7 +284,7 @@ void P2PSync<Dtype>::InternalThreadEntry() {
 
 template<typename Dtype>
 void P2PSync<Dtype>::on_start() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
 #ifdef DEBUG
   int device;
   CUDA_CHECK(cudaGetDevice(&device));
@@ -322,7 +322,7 @@ void P2PSync<Dtype>::on_start() {
 
 template<typename Dtype>
 void P2PSync<Dtype>::on_gradients_ready() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
 #ifdef DEBUG
   int device;
   CUDA_CHECK(cudaGetDevice(&device));

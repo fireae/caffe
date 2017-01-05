@@ -68,7 +68,7 @@ void BatchReindexLayer<Dtype>::Backward_cpu(
   }
 }
 
-#ifdef CPU_ONLY
+#ifdef USE_CUDA
 STUB_GPU(BatchReindexLayer);
 #endif
 

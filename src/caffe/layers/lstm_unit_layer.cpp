@@ -121,7 +121,7 @@ void LSTMUnitLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
   }
 }
 
-#ifdef CPU_ONLY
+#ifdef USE_CUDA
 STUB_GPU(LSTMUnitLayer);
 #endif
 

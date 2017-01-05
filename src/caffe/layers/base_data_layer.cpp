@@ -56,7 +56,7 @@ void BasePrefetchingDataLayer<Dtype>::LayerSetUp(
       prefetch_[i].label_.mutable_cpu_data();
     }
   }
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   if (Caffe::mode() == Caffe::GPU) {
     for (int i = 0; i < PREFETCH_COUNT; ++i) {
       prefetch_[i].data_.mutable_gpu_data();
@@ -74,7 +74,7 @@ void BasePrefetchingDataLayer<Dtype>::LayerSetUp(
 
 template <typename Dtype>
 void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   cudaStream_t stream;
   if (Caffe::mode() == Caffe::GPU) {
     CUDA_CHECK(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
@@ -85,7 +85,7 @@ void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
     while (!must_stop()) {
       Batch<Dtype>* batch = prefetch_free_.pop();
       load_batch(batch);
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
       if (Caffe::mode() == Caffe::GPU) {
         batch->data_.data().get()->async_gpu_push(stream);
         CUDA_CHECK(cudaStreamSynchronize(stream));
@@ -96,7 +96,7 @@ void BasePrefetchingDataLayer<Dtype>::InternalThreadEntry() {
   } catch (boost::thread_interrupted&) {
     // Interrupted exception is expected on shutdown
   }
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
   if (Caffe::mode() == Caffe::GPU) {
     CUDA_CHECK(cudaStreamDestroy(stream));
   }
@@ -124,7 +124,7 @@ void BasePrefetchingDataLayer<Dtype>::Forward_cpu(
   prefetch_free_.push(batch);
 }
 
-#ifdef CPU_ONLY
+#ifdef USE_CUDA
 STUB_GPU_FORWARD(BasePrefetchingDataLayer, Forward);
 #endif
 

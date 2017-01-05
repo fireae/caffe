@@ -66,7 +66,7 @@ TYPED_TEST(CPUStochasticPoolingLayerTest, TestSetup) {
   EXPECT_EQ(this->blob_top_->width(), 2);
 }
 
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
 
 template <typename Dtype>
 class GPUStochasticPoolingLayerTest

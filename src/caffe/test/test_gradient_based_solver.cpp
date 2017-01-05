@@ -73,7 +73,7 @@ class GradientBasedSolverTest : public MultiDeviceTest<TypeParam> {
       const bool snapshot = false, const char* from_snapshot = NULL) {
     ostringstream proto;
     int device_id = 0;
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
     if (Caffe::mode() == Caffe::GPU) {
       CUDA_CHECK(cudaGetDevice(&device_id));
     }
@@ -457,7 +457,7 @@ class GradientBasedSolverTest : public MultiDeviceTest<TypeParam> {
     const int kIterSize = 1;
     // Test over all numbers of devices.
     int available_devices = 1;
-#ifndef CPU_ONLY
+#ifndef USE_CUDA
     if (Caffe::mode() == Caffe::GPU) {
       CUDA_CHECK(cudaGetDeviceCount(&available_devices));
     }

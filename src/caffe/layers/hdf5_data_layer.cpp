@@ -157,7 +157,7 @@ void HDF5DataLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   }
 }
 
-#ifdef CPU_ONLY
+#ifdef USE_CUDA
 STUB_GPU_FORWARD(HDF5DataLayer, Forward);
 #endif
 

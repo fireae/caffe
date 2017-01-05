@@ -122,7 +122,7 @@ void MultiSoftmaxWithLossLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& 
   }
 }
 
-#ifdef CPU_ONLY
+#ifdef USE_CUDA
 STUB_GPU(MultiSoftmaxWithLossLayer);
 #endif
 

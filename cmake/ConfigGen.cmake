@@ -53,7 +53,7 @@ function(caffe_generate_export_configs)
   set(Caffe_DEFINITIONS "")
   if(NOT HAVE_CUDA)
     set(HAVE_CUDA FALSE)
-    list(APPEND Caffe_DEFINITIONS -DCPU_ONLY)
+    list(APPEND Caffe_DEFINITIONS -DUSE_CUDA)
   endif()
 
   if(USE_OPENCV)
